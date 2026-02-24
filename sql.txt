@@ -1,0 +1,286 @@
+SQL> connect
+Enter user-name: system
+Enter password:
+Connected.
+SQL> CREATE TABLE Course (
+  2      course_no VARCHAR(10),
+  3      course_fee NUMBER(10)
+  4  );
+
+Table created.
+
+SQL> insert into course values(c1,1000);
+insert into course values(c1,1000)
+                          *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into course values('c1',1000);
+
+1 row created.
+
+SQL> insert into course values('c2',1500);
+
+1 row created.
+
+SQL> insert into course values('c3',1000);
+
+1 row created.
+
+SQL> insert into course values('c4',2000);
+
+1 row created.
+
+SQL> insert into course values('c5',2000);
+
+1 row created.
+
+SQL> select * from course;
+
+COURSE_NO  COURSE_FEE
+---------- ----------
+c1               1000
+c2               1500
+c3               1000
+c4               2000
+c5               2000
+
+SQL> desc students;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER
+ NAME                                               VARCHAR2(20)
+ AGE                                                NUMBER
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER
+ AGE                                       NOT NULL NUMBER
+ NAME                                               VARCHAR2(10)
+ SALARY                                             VARCHAR2(20)
+
+SQL> desc std;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(10)
+ NAME                                               VARCHAR2(10)
+ CITY                                               VARCHAR2(10)
+ SALARY                                             NUMBER(10)
+
+SQL> drop table students;
+
+Table dropped.
+
+SQL> create table students (
+  2  std_id number(10),
+  3  std_name varchar(10),
+  4  std_address varchar(10),
+  5  std_dept varchar(10));
+
+Table created.
+
+SQL> insert into students values (1,'mani','ongole','CSD');
+
+1 row created.
+
+SQL> insert into students values (2,'naveen','vijayawada','CSD');
+
+1 row created.
+
+SQL> insert into students values (3,'prazval','nellore','CSE');
+
+1 row created.
+
+SQL> insert into students values (4,'bhanu','chirala','CSE2');
+
+1 row created.
+
+SQL> SELECT * FROM students
+  2  WHERE std_id IS NULL;
+
+no rows selected
+
+SQL> ALTER TABLE students
+  2  ADD CONSTRAINT pk_students PRIMARY KEY (std_id);
+
+Table altered.
+
+SQL> desc students;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STD_ID                                    NOT NULL NUMBER(10)
+ STD_NAME                                           VARCHAR2(10)
+ STD_ADDRESS                                        VARCHAR2(10)
+ STD_DEPT                                           VARCHAR2(10)
+
+SQL> select * from students;
+
+    STD_ID STD_NAME   STD_ADDRES STD_DEPT
+---------- ---------- ---------- ----------
+         1 mani       ongole     CSD
+         2 naveen     vijayawada CSD
+         3 prazval    nellore    CSE
+         4 bhanu      chirala    CSE2
+
+SQL> set serveroutput on
+SQL> declare
+  2  a number(2):=10;
+  3  begin
+  4  while a<20 loop
+  5  dbms_output.put_line('value of a:'||a);
+  6  a:=a+1;
+  7  end loop;
+  8  end;
+  9  /
+value of a:10
+value of a:11
+value of a:12
+value of a:13
+value of a:14
+value of a:15
+value of a:16
+value of a:17
+value of a:18
+value of a:19
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  i number(3):=1;
+  3  sum1 number(4):=0;
+  4  begin
+  5  while i<11 loop
+  6  sum1:=sum1+i;
+  7  i:=i+1;
+  8  end loop;
+  9  dbms_output.put_line('sum is :'||sum1);
+ 10  end;
+ 11  /
+sum is :55
+
+PL/SQL procedure successfully completed.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> declare
+  2  a number(2);
+  3  begin
+  4  for a in 10..20 loop
+  5  dbms_output.put_line('value of a :'||a);
+  6  end loop;
+  7  end;
+  8  /
+value of a :10
+value of a :11
+value of a :12
+value of a :13
+value of a :14
+value of a :15
+value of a :16
+value of a :17
+value of a :18
+value of a :19
+value of a :20
+
+PL/SQL procedure successfully completed.
+
+SQL> begin
+  2  .,
+  3  /
+.,
+*
+ERROR at line 2:
+ORA-06550: line 2, column 1:
+PLS-00103: Encountered the symbol "." when expecting one of the following:
+( begin case declare exit for goto if loop mod null pragma
+raise return select update while with <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> <<
+continue close current delete fetch lock insert open rollback
+savepoint set sql execute commit forall merge pipe purge
+
+
+SQL> declare
+  2  i number(3);
+  3  j number(3);
+  4  sum1 number(4):=0;
+  5  begin
+  6  for i in 1..10 loop
+  7  sum1:= sum1+i;
+  8  end loop;
+  9  dbms_output.put_line('sum is :'||sum1);
+ 10  end;
+ 11  /
+sum is :55
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  a number(2);
+  3  begin
+  4  for a in reverse 10..20 loop
+  5  dbms_output.put_line('value of a:'||a);
+  6  end loop;
+  7  end;
+  8  /
+value of a:20
+value of a:19
+value of a:18
+value of a:17
+value of a:16
+value of a:15
+value of a:14
+value of a:13
+value of a:12
+value of a:11
+value of a:10
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  I number(1);
+  3  J number(1);
+  4  begin
+  5  <<OUTER_LOOP>>
+  6  for I in 1..3 loop
+  7  <<INNER_LOOP>>
+  8  for J in 1..3 loop
+  9  dbms_output.put_line('I is :'||I||'J is :'||J);
+ 10  end loop INNER_LOOP;
+ 11  end loop OUTER_LOOP;
+ 12  end;
+ 13  /
+I is :1J is :1
+I is :1J is :2
+I is :1J is :3
+I is :2J is :1
+I is :2J is :2
+I is :2J is :3
+I is :3J is :1
+I is :3J is :2
+I is :3J is :3
+
+PL/SQL procedure successfully completed.
+
+
+QL> declare
+  2    a number(10);
+  3  notfound exception;
+  4      begin
+  5      select sal into a from employee where id = 1;
+  6      if a< 10000 then
+  7      raise notfound;
+  8      else
+  9      dbms_output.put_line(a);
+ 10      end if;
+ 11     exception
+ 12     when notfound then
+ 13     dbms_output.put_line('less amount');
+ 14     end;
+ 15     /
+30000
+
+PL/SQL procedure successfully completed.
